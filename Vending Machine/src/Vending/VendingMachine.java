@@ -21,7 +21,7 @@ public class VendingMachine
 	
 	}
 	
-	public String getSystemInfo()//returns the infromation about the vending machine object
+	public String getSystemInfo()//returns the information about the vending machine object
 	{
 		String info= "Owner: "+ owner +"\nNumber of Items: "+itemCount+"\nTotal money in machine: £"+String.format("%.2f",totalMoney)+"\nStatus:" +vmStatus;
 		return info;
@@ -50,7 +50,7 @@ public class VendingMachine
 				{
 					if(this.userMoney >= stock[selection].getPrice()*100)//checks that the user has input enough money to purchase the item 
 					{
-						 double change = userMoney-stock[selection].getPrice()*100; // calculates chnage to be return to the user
+						 double change = userMoney-stock[selection].getPrice()*100; // calculates change to be return to the user
 						 totalMoney= totalMoney -change;
 						 userMoney=userMoney-(change +stock[selection].getPrice()*100);
 						 int newQty= stock[selection].getQty() -1;
@@ -76,47 +76,17 @@ public class VendingMachine
 		
 	}
 	
-	public boolean insertCoin(int coin) //deals with the money that has been inserted by the user
+	public void insertCoin(int coin) //deals with the money that has been inserted by the user
 	{
-		if(coin/5==1)// checks whether or not the input from the user is vaild
+		switch(coin)
 		{
-			this.userMoney+= coin;
-			totalMoney+= coin;
-			return true;
-		}
-		else if(coin/5==2)
-		{
-			this.userMoney+= coin;
-			totalMoney+= coin;
-			return true;
-		}
-		else if(coin/5==4)
-		{
-			this.userMoney+= coin;
-			totalMoney+= coin;
-			return true;
-		}
-		else if(coin/5==10)
-		{
-			this.userMoney+= coin;
-			totalMoney+= coin;
-			return true;
-		}
-		else if(coin/5==20)
-		{
-			this.userMoney+= coin;
-			totalMoney+= coin;
-			return true;
-		}
-		else if(coin/5==10)
-		{
-			this.userMoney+= coin;
-			totalMoney+= coin;
-			return true;
-		}
-		else
-		{
-			return false;
+		case 1 : this.userMoney+=5; break;
+		case 2 : this.userMoney+=10; break;
+		case 3 : this.userMoney+=20; break;
+		case 4 : this.userMoney+=50;break;
+		case 5 : this.userMoney+= 100; break;
+		case 6:  this.userMoney+= 200; break;
+		default: System.out.println("INVALID SELECTION PLEASE TRY AGAIN\n");break;
 		}
 		
 	}
@@ -128,7 +98,7 @@ public class VendingMachine
 			String sStock[]= new String[this.itemCount];
 			for (int i=0; i< this.itemCount; i++)
 			{
-				sStock[i]= "selction: " +(i+1)+" Name: "+stock[i].getName() + ", Price: £"+String.format("%.2f", stock[i].getPrice())+ ", Number Available: "+stock[i].getQty()+"\n";
+				sStock[i]= "selection: " +(i+1)+" Name: "+stock[i].getName() + ", Price: £"+String.format("%.2f", stock[i].getPrice())+ ", Number Available: "+stock[i].getQty()+"\n";
 			}
 			return sStock;
 		}

@@ -4,13 +4,14 @@ import java.util.Scanner;//initialize Scanner
 public class Main 
 {
 	static String title="QUB Vending";// Title for the vending machine object
-	static final String[] options = {"View Options", "Enter Coins", "View Entered Coins", "Purchase item", "Quit","Engineer Mode"};//options for the menu object
-	static final String[] engineerOptions={"Veiw System Information","Restock","Reset","Exit Service Mode"}; //adds options for the Engineer Menu
+	static final String[] options = {"View Options", "Enter Coins", "View Entered Cash", "Purchase item", "Quit","Engineer Mode"};//options for the menu object
+	static final String[] engineerOptions={"View System Information","Restock","Reset","Exit Service Mode"}; //adds options for the Engineer Menu
+	static final String[] coinOptions= {"5p", "10p", "20p", "50p","£1","£2"};
 	static Menu myMenu= new Menu(title, options );// creation of the menu object passing the values for title and options
 	static Menu eMenu= new Menu(title, engineerOptions );
 	static VendingMachine vendingMachine = new VendingMachine("QUB", 10);// Creation of the vending machine object passing values for owner and max items
-	static VendItem ripple= new VendItem("Ripple", 1.00, 10);// Creating Vend Items to be added to the vending machine 
-	static VendItem twix= new VendItem("Twix", 0.80, 10);
+	static VendItem ripple= new VendItem("Ripple", 1.00, 9);// Creating Vend Items to be added to the vending machine 
+	static VendItem twix= new VendItem("Twix", 0.80, 11);
 	static VendItem bounty= new VendItem("Bounty", 0.70, 8);
 	static VendItem skittles= new VendItem("Skittles", 1.50);
 	static Scanner input = new Scanner(System.in);// Scanner to read in user input 
@@ -50,7 +51,7 @@ public class Main
 		switch(choice)
 		{
 		case 1 : String [] items= vendingMachine.listItems(); for(int i=0; i< items.length; i++) {System.out.println(items[i]);}; break;
-		case 2 : System.out.println("Please eneter the value of the coin in pence\nOnly 5p, 10p 20p, 50p, £1, £2 coins are accpeted");  int coin =input.nextInt();  boolean insert =vendingMachine.insertCoin(coin); if(insert== false) {System.out.println("Coins Returned Invalid input please try again\n");} ; break;
+		case 2 : System.out.println("Please eneter the value of the coin\n"); for(int i=0; i< coinOptions.length; i++) {System.out.println("selection " +(i+1)+": "+coinOptions[i]);} int coin =input.nextInt();   vendingMachine.insertCoin(coin); ; break;
 		case 3 : System.out.println("You have entered: £"+ String.format("%.2f",vendingMachine.getUserMoney()/100)+"\n"); ; break;
 		case 4 : System.out.println("Please enter the number of the item you would like to purchase"); int selection=input.nextInt(); vendingMachine.purchaseItem(selection)  ; break;
 		case 6 : engineerMode(); break;
@@ -62,12 +63,12 @@ public class Main
 		 final Menu eMenu= new Menu("Engineer Menu",Main.engineerOptions);
 		 int choice;
 		 boolean quit = false;
-		 String validPassword="password";
-		 vendingMachine.setStatus(1);
-		 System.out.println("Please enter password");
-		 String password = input.nextLine();
+		 int validPinCode=2112;
+		 vendingMachine.setStatus(2);
+		 System.out.println("Please enter pin code");
+		 int pinCode = input.nextInt();
 		 
-		 if (password.contentEquals(validPassword))
+		 if (pinCode==validPinCode)
 		 {do 
 			{
 			choice=eMenu.getChoice();
